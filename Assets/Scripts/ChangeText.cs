@@ -1,3 +1,4 @@
+
 using UnityEngine;
 using UnityEngine.UI;
 using DG.Tweening;
@@ -12,11 +13,6 @@ public class ChangeText : MonoBehaviour
     {
         Sequence sequence = DOTween.Sequence();
 
-        sequence.AppendCallback(() =>
-        {
-            _textObject.text = "";
-        });
-
         foreach (string state in _states)
         {
             int method = Random.Range(0, 3);
@@ -24,17 +20,18 @@ public class ChangeText : MonoBehaviour
             switch (method)
             {
                 case 0:
-                    sequence.AppendCallback(() =>
-                    {
-                        _textObject.text = state;
-                    });
+                    sequence.Append(
+                        _textObject.DOText(state, 3f)
+                    );
                     break;
 
                 case 1:
-                    sequence.AppendCallback(() =>
-                    {
-                        _textObject.text += "\n" + state;
-                    });
+                    sequence.Append(
+                        _textObject.DOText(
+                            _textObject.text + "\n" + state,
+                            3f
+                        )
+                    );
                     break;
 
                 case 2:
